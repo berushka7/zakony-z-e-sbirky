@@ -1,5 +1,5 @@
 ---
-name: zakony-z-e-sbirky
+name: zakony
 description: Stažení textu českého právního předpisu z otevřených dat e-Sbírky a zjištění, jestli se konkrétní ustanovení mezi zněními změnilo. Použij, když potřebuješ citovat český zákon, vyhlášku, nařízení vlády nebo sdělení, ověřit znění platné v konkrétním roce, nebo doložit původ nějaké konstanty (sazba, práh, lhůta). Spouštěč: „co říká § …", „platilo to i v roce …", „odkud je tahle částka", „stáhni zákon".
 ---
 
@@ -12,10 +12,9 @@ i překlep v jednom slově chyba.
 
 ## Postup
 
-Skripty leží vedle tohohle souboru, ne v projektu — proto se volají přes `${CLAUDE_SKILL_DIR}`,
-který Claude Code nahradí adresářem skillu, ať je nainstalovaný kdekoli. ⚠️ **Pracovní adresář
-neměň:** znění se ukládají do `zneni/` v projektu, ze kterého se ptáš, ne vedle skriptu.
-Vyžaduje **PowerShell 7+** (`pwsh`).
+Skripty leží mimo projekt, v adresáři skillu — **cesty níž už jsou doplněné, ber je tak, jak
+jsou.** ⚠️ **Pracovní adresář neměň:** znění se ukládají do `zneni/` v projektu, ze kterého se
+ptáš, ne vedle skriptu. Vyžaduje **PowerShell 7+** (`pwsh`).
 
 ```powershell
 # 1) jaká znění předpis má

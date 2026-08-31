@@ -57,9 +57,16 @@ git clone https://github.com/berushka7/zakony-z-e-sbirky .claude/skills/zakony-z
 **3. Pro sebe, do všech projektů** — totéž do `~/.claude/skills/zakony-z-e-sbirky`
 (⚠️ máš-li nastavené `CLAUDE_CONFIG_DIR`, jde to tam, ne do `~/.claude`).
 
-Pak se skill vyvolá buď sám, když se na zákon zeptáš, nebo natvrdo přes
-`/zakony-z-e-sbirky`. Skripty jdou pořád spustit i ručně, bez Claude Code — jsou to obyčejné
-PowerShell skripty.
+Pak se skill vyvolá buď sám, když se na zákon zeptáš, nebo natvrdo: jako plugin přes
+`/zakony-z-e-sbirky:zakony`, jako složka ve `skills/` přes `/zakony-z-e-sbirky`.
+
+> ⚠️ **Proč se skill ve frontmatteru jmenuje `zakony`, a ne jako repozitář.** U pluginu skládá
+> Claude Code příkaz z názvu pluginu a názvu skillu. Když se oba jmenují stejně, prefix se odloupne,
+> nezbude nic — a jméno spadne na záložní variantu, kterou je u pluginu z marketplace **název
+> instalačního adresáře, tedy číslo verze**. Ověřeno instalací: skill se vyvolával jako
+> `/zakony-z-e-sbirky:1-0-0` a po každé aktualizaci by se jmenoval jinak.
+
+Skripty jdou pořád spustit i ručně, bez Claude Code — jsou to obyčejné PowerShell skripty.
 
 ## Proč celé znění, a ne výňatek
 

@@ -1,5 +1,6 @@
 {
   "name": "berushka-skills",
+  "description": "Skilly pro práci s českými úředními zdroji — zatím jeden: text právního předpisu z otevřených dat e-Sbírky.",
   "owner": {
     "name": "Pavel Klásek",
     "url": "https://github.com/berushka7"

@@ -24,7 +24,7 @@ Bere se jako PŘEDPONA, takže `par_9` vypíše i všechny jeho odstavce.
 Nejstarší znění, které se má porovnávat (yyyy-MM-dd). Bez něj se berou znění od $VychoziOd.
 
 .EXAMPLE
-.\tools\zakony\porovnat-paragraf.ps1 -Rok 1997 -Cislo 48 -Fragment par_9-odst_2
+.\skills\zakony\porovnat-paragraf.ps1 -Rok 1997 -Cislo 48 -Fragment par_9-odst_2
 Vypíše, jak zní § 9 odst. 2 v každém znění od roku 2025 — a jestli se text mění.
 #>
 [CmdletBinding()]
@@ -40,8 +40,9 @@ $ErrorActionPreference = 'Stop'
 $Endpoint = 'https://opendata.eselpoint.gov.cz/sparql'
 $Slovnik  = 'https://slovník.gov.cz/datový/sbírka/pojem/'
 
-# Stejná hranice jako $NejstarsiPocitanyRok ve `fetch-zakon.ps1` — starší znění nás nezajímají,
-# protože za ta období aplikace nepočítá.
+# Stejná hranice jako $NejstarsiPocitanyRok ve `fetch-zakon.ps1`. Je to VOLBA, ne vlastnost dat:
+# u předpisu s devadesáti zněními by úplný výpis nikdo nepřečetl. Kdo se ptá na starší období,
+# ať předá -Od — jinak dostane prázdno a splete si ho s „ustanovení se nikdy neměnilo".
 $VychoziOd = '2025-01-01'
 if (-not $Od) { $Od = $VychoziOd }
 

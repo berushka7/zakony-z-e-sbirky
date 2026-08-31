@@ -564,7 +564,7 @@ if ($Zneni -gt (Get-Date -Format 'yyyy-MM-dd')) {
     [void]$sb.AppendLine("> se zněním účinným dnes.")
     [void]$sb.AppendLine()
 }
-[void]$sb.AppendLine("> ⚠️ **Generováno, needitovat ručně.** Stáhlo ``tools/zakony/fetch-zakon.ps1``")
+[void]$sb.AppendLine("> ⚠️ **Generováno, needitovat ručně.** Stáhl skill ``zakony`` (``fetch-zakon.ps1``)")
 [void]$sb.AppendLine("> z otevřených dat e-Sbírky $(Get-Date -Format 'd. M. yyyy').")
 [void]$sb.AppendLine("> ")
 [void]$sb.AppendLine("> ELI: ``eli/cz/sb/$Rok/$Cislo/$Zneni``")

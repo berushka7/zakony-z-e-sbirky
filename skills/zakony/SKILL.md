@@ -16,6 +16,12 @@ Skripty leží mimo projekt, v adresáři skillu — **cesty níž už jsou dopl
 jsou.** ⚠️ **Pracovní adresář neměň:** znění se ukládají do `zneni/` v projektu, ze kterého se
 ptáš, ne vedle skriptu. Vyžaduje **PowerShell 7+** (`pwsh`).
 
+⏳ **Počítej s minutami, ne s vteřinami.** Dotazy jdou přes SPARQL endpoint a posílají se
+s rozestupy, aby je nesestřelil WAF — porovnání šesti znění trvalo přes tři minuty, stažení
+velkého předpisu déle. To je nad výchozím timeoutem nástrojů na spouštění příkazů, takže
+**pouštěj skripty na pozadí** a výstup si přečti, až doběhnou. Timeout není chyba skriptu a není
+důvod pouštět ho znovu jinak.
+
 ```powershell
 # 1) jaká znění předpis má
 & "${CLAUDE_SKILL_DIR}/fetch-zakon.ps1" -Rok 2004 -Cislo 235
@@ -25,7 +31,21 @@ ptáš, ne vedle skriptu. Vyžaduje **PowerShell 7+** (`pwsh`).
 
 # 3) platilo to ustanovení stejně i dřív?
 & "${CLAUDE_SKILL_DIR}/porovnat-paragraf.ps1" -Rok 1997 -Cislo 48 -Fragment par_9-odst_2
+
+# 4) nepřibylo u něčeho, co je uložené, novější znění?
+& "${CLAUDE_SKILL_DIR}/fetch-zakon.ps1" -Check
 ```
+
+⛔ **Krok 3 se sám od sebe dívá jen od roku 2025.** Bez té hranice by u předpisu s devadesáti
+zněními výpis nikdo nepřečetl. Ptá-li se ale někdo na starší rok, **musíš předat `-Od`** — jinak
+dostaneš prázdno a spleteš si ho s „ustanovení se nikdy neměnilo":
+
+```powershell
+& "${CLAUDE_SKILL_DIR}/porovnat-paragraf.ps1" -Rok 1997 -Cislo 48 -Fragment par_9-odst_2 -Od 2018-01-01
+```
+
+Totéž hlídá u `-Check` parametr `-NejstarsiRok`: říká, která uložená znění se už smí považovat
+za překonaná.
 
 💡 **Má projekt pro znění vlastní místo?** Předej ho parametrem `-OutDir <cesta>`; u `-Check`
 je to táž složka, kterou má projít.

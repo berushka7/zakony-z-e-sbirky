@@ -1,7 +1,7 @@
 {
   "name": "zakony-z-e-sbirky",
   "description": "Stažení úplného znění českého právního předpisu z otevřených dat e-Sbírky — a nástroj, který řekne, jestli se konkrétní ustanovení mezi zněními změnilo.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Pavel Klásek",
     "url": "https://github.com/berushka7"

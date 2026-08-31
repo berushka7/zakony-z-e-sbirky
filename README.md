@@ -21,52 +21,67 @@ kolem nich.**
 
 ```powershell
 # jaká znění předpis má
-.\fetch-zakon.ps1 -Rok 2004 -Cislo 235
+.\skills\zakony\fetch-zakon.ps1 -Rok 2004 -Cislo 235
 
 # stáhnout konkrétní znění do zneni/2004-235-2026-01-01.md
-.\fetch-zakon.ps1 -Rok 2004 -Cislo 235 -Zneni 2026-01-01
+.\skills\zakony\fetch-zakon.ps1 -Rok 2004 -Cislo 235 -Zneni 2026-01-01
 
 # nepřibylo u něčeho, co mám uložené, novější znění?
-.\fetch-zakon.ps1 -Check
+.\skills\zakony\fetch-zakon.ps1 -Check
 
 # změnilo se tohle ustanovení mezi zněními? (bez stahování čehokoli)
-.\porovnat-paragraf.ps1 -Rok 1997 -Cislo 48 -Fragment par_9-odst_2
+.\skills\zakony\porovnat-paragraf.ps1 -Rok 1997 -Cislo 48 -Fragment par_9-odst_2
 ```
 
 Vyžaduje **PowerShell 7+** (`pwsh`). Žádné závislosti, žádná registrace, žádný klíč. Znění se
 ukládají do `zneni/` **v aktuálním adresáři** — jinam přes `-OutDir`.
 
+⏳ **Trvá to minuty, ne vteřiny.** Dotazy chodí na SPARQL endpoint s rozestupy, aby je nesestřelil
+WAF: porovnání šesti znění zabralo přes tři minuty, stažení velkého předpisu déle.
+
+⛔ **Porovnání se samo od sebe dívá jen od `2025-01-01`.** Na starší období předej `-Od`, jinak
+dostaneš prázdno — a to se snadno splete s „ustanovení se nikdy neměnilo". Totéž u `-Check` řídí
+`-NejstarsiRok`.
+
 ## Instalace do Claude Code
 
-Repozitář je zároveň **skill** (`SKILL.md`), takže se Claude Code může zákona zeptat sám. Tři
-cesty, jak ho tam dostat — liší se jen tím, kdo ho pak vidí:
+Repozitář je zároveň **skill** (`skills/zakony/SKILL.md`), takže se Claude Code může zákona
+zeptat sám.
 
-**1. Jako plugin (doporučeno).** Aktualizuje se příkazem, ne `git pull`:
+**Jako plugin (doporučeno).** Aktualizuje se příkazem, ne `git pull`:
 
 ```
 /plugin marketplace add berushka7/zakony-z-e-sbirky
 /plugin install zakony-z-e-sbirky@berushka-skills
 ```
 
-**2. Do jednoho projektu** (jde do gitu, má ho každý, kdo repo klonuje):
+Skill se pak vyvolá buď sám, když se na zákon zeptáš, nebo natvrdo přes
+`/zakony-z-e-sbirky:zakony`.
 
-```bash
-git clone https://github.com/berushka7/zakony-z-e-sbirky .claude/skills/zakony-z-e-sbirky
+**Bez pluginu, jako složka.** Zkopíruj **podadresář `skills\zakony`**, ne celý repozitář — do
+`.claude\skills\` v projektu (jde do gitu, má ho každý, kdo repo klonuje), nebo do
+`~\.claude\skills\` jen pro sebe, do všech projektů (⚠️ máš-li nastavené `CLAUDE_CONFIG_DIR`,
+jde to tam, ne do `~/.claude`). Vyvolává se pak přes `/zakony`.
+
+```powershell
+git clone https://github.com/berushka7/zakony-z-e-sbirky
+Copy-Item -Recurse zakony-z-e-sbirky\skills\zakony .claude\skills\zakony
 ```
 
-**3. Pro sebe, do všech projektů** — totéž do `~/.claude/skills/zakony-z-e-sbirky`
-(⚠️ máš-li nastavené `CLAUDE_CONFIG_DIR`, jde to tam, ne do `~/.claude`).
+Claude Code hledá `SKILL.md` přímo v `.claude/skills/<jméno>/`, takže naklonovaný celý
+repozitář by se nenačetl. Aktualizace je `git pull` a kopie znovu — kdo nechce hlídat ruční
+kopie, ať jde cestou pluginu.
 
-Pak se skill vyvolá buď sám, když se na zákon zeptáš, nebo natvrdo: jako plugin přes
-`/zakony-z-e-sbirky:zakony`, jako složka ve `skills/` přes `/zakony-z-e-sbirky`.
+> ⚠️ **Proč skill sedí v `skills/zakony/`, a ne v kořeni repozitáře.** `SKILL.md` v kořeni pluginu
+> se sice načte, ale **jméno mu Claude Code nevezme z frontmatteru** — spadne na název instalačního
+> adresáře, a tím je u pluginu z marketplace **číslo verze**. Ověřeno na 1.0.1, kde `name: zakony`
+> ve frontmatteru bylo: `claude plugin details` hlásil `Skills (1) 1.0.1`,
+> `/zakony-z-e-sbirky:zakony` vracelo „Unknown command", zabíralo jen `/zakony-z-e-sbirky:1.0.1`
+> — a v nové session se skill vůbec nenabídl, takže se sám nikdy nevyvolal. Podadresář
+> `skills/<jméno>/` to řeší: jméno drží složka a přežije aktualizaci.
 
-> ⚠️ **Proč se skill ve frontmatteru jmenuje `zakony`, a ne jako repozitář.** U pluginu skládá
-> Claude Code příkaz z názvu pluginu a názvu skillu. Když se oba jmenují stejně, prefix se odloupne,
-> nezbude nic — a jméno spadne na záložní variantu, kterou je u pluginu z marketplace **název
-> instalačního adresáře, tedy číslo verze**. Ověřeno instalací: skill se vyvolával jako
-> `/zakony-z-e-sbirky:1-0-0` a po každé aktualizaci by se jmenoval jinak.
-
-Skripty jdou pořád spustit i ručně, bez Claude Code — jsou to obyčejné PowerShell skripty.
+Skripty jdou pořád spustit i ručně, bez Claude Code — jsou to obyčejné PowerShell skripty
+v `skills\zakony\`.
 
 ## Proč celé znění, a ne výňatek
 

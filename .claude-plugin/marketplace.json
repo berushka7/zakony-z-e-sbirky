@@ -1,0 +1,14 @@
+{
+  "name": "berushka-skills",
+  "owner": {
+    "name": "Pavel Klásek",
+    "url": "https://github.com/berushka7"
+  },
+  "plugins": [
+    {
+      "name": "zakony-z-e-sbirky",
+      "source": "./",
+      "description": "Stažení úplného znění českého právního předpisu z otevřených dat e-Sbírky — a nástroj, který řekne, jestli se konkrétní ustanovení mezi zněními změnilo."
+    }
+  ]
+}

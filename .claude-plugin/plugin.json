@@ -1,0 +1,13 @@
+{
+  "name": "zakony-z-e-sbirky",
+  "description": "Stažení úplného znění českého právního předpisu z otevřených dat e-Sbírky — a nástroj, který řekne, jestli se konkrétní ustanovení mezi zněními změnilo.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Pavel Klásek",
+    "url": "https://github.com/berushka7"
+  },
+  "homepage": "https://github.com/berushka7/zakony-z-e-sbirky",
+  "repository": "https://github.com/berushka7/zakony-z-e-sbirky",
+  "license": "MIT",
+  "keywords": ["czech-law", "e-sbirka", "legal", "sparql", "powershell"]
+}

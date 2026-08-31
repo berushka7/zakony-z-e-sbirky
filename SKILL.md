@@ -1,5 +1,5 @@
 ---
-name: zakony-z-esbirky
+name: zakony-z-e-sbirky
 description: Stažení textu českého právního předpisu z otevřených dat e-Sbírky a zjištění, jestli se konkrétní ustanovení mezi zněními změnilo. Použij, když potřebuješ citovat český zákon, vyhlášku, nařízení vlády nebo sdělení, ověřit znění platné v konkrétním roce, nebo doložit původ nějaké konstanty (sazba, práh, lhůta). Spouštěč: „co říká § …", „platilo to i v roce …", „odkud je tahle částka", „stáhni zákon".
 ---
 
@@ -12,16 +12,24 @@ i překlep v jednom slově chyba.
 
 ## Postup
 
+Skripty leží vedle tohohle souboru, ne v projektu — proto se volají přes `${CLAUDE_SKILL_DIR}`,
+který Claude Code nahradí adresářem skillu, ať je nainstalovaný kdekoli. ⚠️ **Pracovní adresář
+neměň:** znění se ukládají do `zneni/` v projektu, ze kterého se ptáš, ne vedle skriptu.
+Vyžaduje **PowerShell 7+** (`pwsh`).
+
 ```powershell
 # 1) jaká znění předpis má
-.\fetch-zakon.ps1 -Rok 2004 -Cislo 235
+& "${CLAUDE_SKILL_DIR}/fetch-zakon.ps1" -Rok 2004 -Cislo 235
 
 # 2) stáhnout to, které tě zajímá
-.\fetch-zakon.ps1 -Rok 2004 -Cislo 235 -Zneni 2026-01-01
+& "${CLAUDE_SKILL_DIR}/fetch-zakon.ps1" -Rok 2004 -Cislo 235 -Zneni 2026-01-01
 
 # 3) platilo to ustanovení stejně i dřív?
-.\porovnat-paragraf.ps1 -Rok 1997 -Cislo 48 -Fragment par_9-odst_2
+& "${CLAUDE_SKILL_DIR}/porovnat-paragraf.ps1" -Rok 1997 -Cislo 48 -Fragment par_9-odst_2
 ```
+
+💡 **Má projekt pro znění vlastní místo?** Předej ho parametrem `-OutDir <cesta>`; u `-Check`
+je to táž složka, kterou má projít.
 
 💡 **Krok 3 nahrazuje stahování.** Když jde jen o to, „změnilo se to?", nestahuj celý zákon —
 48/1997 má 94 znění a 1 634 fragmentů, kdežto § 9 odst. 2 jsou dvě věty.

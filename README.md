@@ -1,4 +1,4 @@
-# zakony-z-esbirky
+# zakony-z-e-sbirky
 
 Stažení úplného znění českého právního předpisu z **otevřených dat e-Sbírky** do textového
 souboru — a nástroj, který řekne, jestli se konkrétní ustanovení mezi zněními změnilo.
@@ -33,7 +33,33 @@ kolem nich.**
 .\porovnat-paragraf.ps1 -Rok 1997 -Cislo 48 -Fragment par_9-odst_2
 ```
 
-Vyžaduje **PowerShell 7+** (`pwsh`). Žádné závislosti, žádná registrace, žádný klíč.
+Vyžaduje **PowerShell 7+** (`pwsh`). Žádné závislosti, žádná registrace, žádný klíč. Znění se
+ukládají do `zneni/` **v aktuálním adresáři** — jinam přes `-OutDir`.
+
+## Instalace do Claude Code
+
+Repozitář je zároveň **skill** (`SKILL.md`), takže se Claude Code může zákona zeptat sám. Tři
+cesty, jak ho tam dostat — liší se jen tím, kdo ho pak vidí:
+
+**1. Jako plugin (doporučeno).** Aktualizuje se příkazem, ne `git pull`:
+
+```
+/plugin marketplace add berushka7/zakony-z-e-sbirky
+/plugin install zakony-z-e-sbirky@berushka-skills
+```
+
+**2. Do jednoho projektu** (jde do gitu, má ho každý, kdo repo klonuje):
+
+```bash
+git clone https://github.com/berushka7/zakony-z-e-sbirky .claude/skills/zakony-z-e-sbirky
+```
+
+**3. Pro sebe, do všech projektů** — totéž do `~/.claude/skills/zakony-z-e-sbirky`
+(⚠️ máš-li nastavené `CLAUDE_CONFIG_DIR`, jde to tam, ne do `~/.claude`).
+
+Pak se skill vyvolá buď sám, když se na zákon zeptáš, nebo natvrdo přes
+`/zakony-z-e-sbirky`. Skripty jdou pořád spustit i ručně, bez Claude Code — jsou to obyčejné
+PowerShell skripty.
 
 ## Proč celé znění, a ne výňatek
 

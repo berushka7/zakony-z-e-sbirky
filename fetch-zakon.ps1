@@ -31,7 +31,7 @@ Vypíše seznam všech znění (včetně budoucích).
 
 .EXAMPLE
 .\fetch-zakon.ps1 -Rok 1992 -Cislo 592 -Zneni 2026-05-27
-Stáhne znění do zneni/1992-592-2026-05-27.md
+Stáhne znění do zneni/1992-592-2026-05-27.md (v aktuálním adresáři; jinam přes -OutDir).
 #>
 [CmdletBinding(DefaultParameterSetName = 'Fetch')]
 param(
@@ -43,7 +43,7 @@ param(
     # naopak některé uložené nepřestalo dávat smysl (viz -NejstarsiRok).
     [Parameter(Mandatory, ParameterSetName = 'Check')][switch]$Check,
 
-    # Kam se ukládá; výchozí je podadresář `zneni` vedle skriptu.
+    # Kam se ukládá; výchozí je podadresář `zneni` v aktuálním adresáři (viz níže).
     [string]$OutDir,
 
     # ⛔ Řídí, KTERÁ ZNĚNÍ SMÍ ZMIZET. Znění účinné kdykoli od tohohle roku dál je pořád živý
@@ -56,7 +56,12 @@ $ErrorActionPreference = 'Stop'
 
 $Endpoint = 'https://opendata.eselpoint.gov.cz/sparql'
 $Slovnik  = 'https://slovník.gov.cz/datový/sbírka/pojem/'
-if (-not $OutDir) { $OutDir = Join-Path $PSScriptRoot 'zneni' }
+# ⚠️ Výchozí cíl je `zneni` v AKTUÁLNÍM adresáři, ne vedle skriptu. Dokud se repozitář jen
+# klonoval, bylo to totéž — jenže jako nainstalovaný skill leží skript v adresáři Claude Code
+# (`~/.claude/skills/…`, u pluginu v adresáři pluginu) a `$PSScriptRoot` by stahoval znění TAM:
+# do složky, kterou uživatel nemá v gitu, nevidí do ní, a při aktualizaci skillu o ni přijde.
+# Stažené znění patří k projektu, který ho cituje.
+if (-not $OutDir) { $OutDir = Join-Path (Get-Location).Path 'zneni' }
 $NejstarsiPocitanyRok = $NejstarsiRok
 
 # ⛔ CO SE SEM UKLÁDÁ VŮBEC (ověřeno 8/2026). Uložením předpisu si ho

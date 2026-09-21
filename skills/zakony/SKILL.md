@@ -1,6 +1,11 @@
 ---
 name: zakony
-description: Stažení textu českého právního předpisu z otevřených dat e-Sbírky a zjištění, jestli se konkrétní ustanovení mezi zněními změnilo. Použij, když potřebuješ citovat český zákon, vyhlášku, nařízení vlády nebo sdělení, ověřit znění platné v konkrétním roce, nebo doložit původ nějaké konstanty (sazba, práh, lhůta). Spouštěč: „co říká § …", „platilo to i v roce …", „odkud je tahle částka", „stáhni zákon".
+description: >-
+  Stažení textu českého právního předpisu z otevřených dat e-Sbírky a zjištění, jestli se konkrétní
+  ustanovení mezi zněními změnilo. Použij, když potřebuješ citovat český zákon, vyhlášku, nařízení
+  vlády nebo sdělení, ověřit znění platné v konkrétním roce, nebo doložit původ nějaké konstanty
+  (sazba, práh, lhůta). Spouštěč: „co říká § …", „platilo to i v roce …", „odkud je tahle částka",
+  „stáhni zákon".
 ---
 
 # Text českého předpisu z e-Sbírky

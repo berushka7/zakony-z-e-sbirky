@@ -139,7 +139,11 @@ i s kusem věty. A nejsou to ozdoby — `&lt;` a `&gt;` jsou ve vzorcích a praz
 ### `0000-00-00` není datum
 
 Takhle e-Sbírka označuje **vyhlášené znění**. U sdělení ministerstev je to jediné znění, které
-existuje — nekonsolidují se, protože se nenovelizují.
+existuje — nekonsolidují se, protože se nenovelizují. U novely je to jediné místo, kde leží
+její **přechodná ustanovení** — do konsolidovaného znění měněného zákona se nepropisují.
+
+Soubor se proto jmenuje **bez data**, `zneni/2026-90.md`, ne `2026-90-0000-00-00.md`. `-Check`
+ho tím nehlídá, a to je správně: vyhlášený text se už nezmění.
 
 ### Velká písmena v názvu jsou sazba, ne obsah
 

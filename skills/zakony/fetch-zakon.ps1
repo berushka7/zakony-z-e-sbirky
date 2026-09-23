@@ -533,7 +533,14 @@ function ConvertTo-HorniIndex([string]$s) {
 }
 
 if (-not (Test-Path $OutDir)) { New-Item -ItemType Directory -Path $OutDir -Force | Out-Null }
-$outFile = Join-Path $OutDir "$Rok-$Cislo-$Zneni.md"
+# ⛔ Vyhlášené znění (`0000-00-00`, viz níž) dostane název BEZ data: `<rok>-<číslo>.md`.
+# Do 23. 9. 2026 se jmenovalo `<rok>-<číslo>-0000-00-00.md` — oprava z 8/2026 zasáhla jen nadpis
+# v souboru, název zůstal. A nebyla to jen kosmetika: `-Check` bere každé `<rok>-<číslo>-<datum>`
+# za hlídané znění, takže by u novely týden co týden hlásil „účinné znění uložené NENÍ" —
+# falešný poplach, přesně ten, který učí nálezy přehlížet. Bez data vzor `-Check` nesplní
+# a hlídat se nemá: vyhlášený text se už nikdy nezmění.
+# 💡 Dřív se to obcházelo ručním přejmenováním po stažení, proto to tak dlouho nikdo neviděl.
+$outFile = Join-Path $OutDir $(if ($Zneni -eq '0000-00-00') { "$Rok-$Cislo.md" } else { "$Rok-$Cislo-$Zneni.md" })
 
 $sb = [System.Text.StringBuilder]::new()
 # ⛔ „Předpis", ne „Zákon" (ověřeno 8/2026). Do dneška tu stálo natvrdo „Zákon č.",
